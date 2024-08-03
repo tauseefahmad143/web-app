@@ -1,0 +1,161 @@
+{% extends 'app.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySite</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    body {
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+    .profile-img {
+      position: absolute; /* Ensure the image is positioned absolutely */
+      top: 15px; /* Adjust the distance from the top */
+      right: 15px; /* Adjust the distance from the right */
+      z-index: 1000; /* Ensure the image appears above other content */
+    }
+    .profile-img img {
+      width: 60px; /* Size of the profile image */
+      height: 60px; /* Size of the profile image */
+      border: 3px solid #fff; /* Optional: Add a border to make it stand out */
+    }
+    .bottom-margin-button {
+      margin-bottom: 30px; /* Adjust the margin as needed */
+    }
+  </style>
+</head>
+<body>
+
+<!-- Main Container -->
+<div class="container-fluid p-0 position-relative">
+  
+  <!-- Profile Image Section -->
+  {% if user_logged_in %}
+  <div class="profile-img">
+    <img src="{{ url_for('static', filename='UPLOAD_FOLDER/' ~ user_image if user_image else '') }}" class="img-fluid rounded-circle">
+  </div>
+  {% endif %}
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">{{ name if name else ''}}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero bg-primary text-white text-center py-5 mb-4">
+    <div class="container">
+      <h1 class="display-4 fw-bold animate__animated animate__fadeIn">Welcome to Homepage!</h1>
+      <p class="lead animate__animated animate__fadeIn animate__delay-1s">Discover amazing features and get started today.</p>
+      <a class="btn btn-light btn-lg mt-4 animate__animated animate__fadeIn animate__delay-2s" href="#features" role="button">Explore Now</a>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <div id="features" class="container text-center mb-5">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-light rounded-3 animate__animated animate__fadeIn animate__delay-3s">
+          <div class="card-body">
+            <h5 class="card-title">Fast Performance</h5>
+            <p class="card-text">Enjoy lightning-fast performance with our optimized platform.</p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-light rounded-3 animate__animated animate__fadeIn animate__delay-3s">
+          <div class="card-body">
+            <h5 class="card-title">User-Friendly</h5>
+            <p class="card-text">Experience a clean and intuitive interface designed for everyone.</p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-light rounded-3 animate__animated animate__fadeIn animate__delay-3s">
+          <div class="card-body">
+            <h5 class="card-title">Secure & Reliable</h5>
+            <p class="card-text">We ensure the highest levels of security to protect your data.</p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register and Login Section -->
+  {% if not user_logged_in %}
+  <div id="register" class="text-center mb-5">
+    <h2 class="animate__animated animate__fadeIn">
+      <i class="bi bi-person-plus"></i> Join Us Today
+    </h2>
+    <p class="animate__animated animate__fadeIn animate__delay-1s">
+      Sign up to start exploring our features.
+    </p>
+    <a class="btn btn-dark btn-lg animate__animated animate__fadeIn animate__delay-2s" href="/register" role="button">
+      <i class="bi bi-person-plus-fill"></i> Register
+    </a>
+  </div>
+
+  <div id="login" class="text-center mb-5">
+    <h2 class="animate__animated animate__fadeIn">
+      <i class="bi bi-person-check"></i> Already a Member?
+    </h2>
+    <p class="animate__animated animate__fadeIn animate__delay-1s">
+      Log in to access your account.
+    </p>
+    <a class="btn btn-dark btn-lg animate__animated animate__fadeIn animate__delay-2s" href="/login" role="button">
+      <i class="bi bi-box-arrow-in-right mt-5"></i> Login
+    </a>
+  </div>
+
+  <div id="forgot-password" class="text-center mb-5">
+    <h2 class="animate__animated animate__fadeIn">
+      <i class="bi bi-question-circle"></i> Forgot Your Password?
+    </h2>
+    <p class="animate__animated animate__fadeIn animate__delay-1s">
+      Recover your account with ease.
+    </p>
+    <a class="btn btn-dark btn-lg animate__animated animate__fadeIn animate__delay-2s" href="/forgot-password" role="button">
+      <i class="bi bi-lock-fill"></i> Forgot Password
+    </a>
+  </div>
+  {% endif %}
+
+  <!-- Logout Section -->
+  {% if user_logged_in %}
+  <div id="logout" class="text-center mt-5 mb-5">
+    <h2 class="animate__animated animate__fadeIn">
+      <i class="bi bi-person-x"></i> Ready to Leave?
+    </h2>
+    <p class="animate__animated animate__fadeIn animate__delay-1s">
+      Log out to end your session.
+    </p>
+    <a class="btn btn-danger btn-lg animate__animated animate__fadeIn animate__delay-2s" href="/logout" role="button">
+      <i class="bi bi-box-arrow-right mb-5"></i> Logout
+    </a>
+  </div>
+  {% endif %}
+
+
+</div>
+
+<!-- Include Bootstrap JavaScript Bundle (includes Popper) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+{% endblock %}
